@@ -15,10 +15,10 @@
                     <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Name</th>
+                            <th>Student No.</th>
                             <th>Email</th>
                             <th>Fullname</th>
-                            <th>Student Number</th>
+                            
                             <th>Sex</th>
                            
                             <th>Action</th>
@@ -31,7 +31,7 @@
                                 <td>{{ student.name }}</td>
                                 <td>{{ student.student_email }}</td>
                                 <td>{{ student.full_name}}</td>
-                                <td>{{ student.student_number }}</td>
+                               
                                 <td>{{ student.gender}}</td>
                                 <td>
                                     <a href="{% url 'students:single_student' student.id %}">

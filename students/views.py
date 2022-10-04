@@ -28,21 +28,30 @@ def single_student(request, student_id):
     return render(request, "students/student_details.html", context)
 
 def student_regi(request):
-    if request.method == "POST":
-        forms = CreateStudent(request.POST)
+      if request.method != 'POST':
+        # Display blank registration form. 
+        form = SignUpForm()
+      else:
+        # Process completed form.
+        form = SignUpForm(data=request.POST)
+        
+        if form.is_valid():
+            new_user = form.save()
+            get_id = form.instance.id  # get the id of a use--it has a username inside
+            users = User.objects.get(id=get_id) # get the new user
+            print(users.email)
+            print(users)
+            studentProfiles = StudentInfo.objects.create( name = users, full_name=users.get_full_name() ,student_email = users.email)
+            studentProfiles.save()
 
-        if forms.is_valid():
-            forms.save()
-        messages.success(request, "Student Registration Successfully!")
-        return redirect("students:student_list")
-    else:
-        forms = CreateStudent()
+            new_user.save()
+          
+            login(request, new_user)
+            return redirect('home')
+      context = {'form': form}
+      return render(request, 'students/register.html', context)
 
-    context = {
-        "forms": forms
-    }
-    return render(request, "students/registration.html", context)
-
+   
 def edit_student(request, pk):
     student_edit = StudentInfo.objects.get(id=pk)
     edit_forms = CreateStudent(instance=student_edit)
@@ -102,3 +111,19 @@ def register(request):
     context = {'form': form}
     return render(request, 'students/registration/register.html', context)
 
+"""
+ if request.method == "POST":
+        forms = CreateStudent(request.POST)
+
+        if forms.is_valid():
+            forms.save()
+        messages.success(request, "Student Registration Successfully!")
+        return redirect("students:student_list")
+    else:
+        forms = CreateStudent()
+
+    context = {
+        "forms": forms
+    }
+    return render(request, "students/registration.html", context)
+"""

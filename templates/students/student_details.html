@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+<div class="container-fluid" style="width: 99%;">
+
+<br>
 
 <div class="row">
     <div class="col-lg-7">
@@ -12,17 +15,13 @@
             <div class="card-body">
                 <tbody>
                     <tr>
-                        <td>Academic Year: {{ single_student.academic_year }}</td>
+                        
+                        <td>Faculty: <span style="font-weight: 500;">  {{ single_student.Faculty }} </span> </td> 
                         <br>
-                        <td>Admission Date: {{ single_student.admission_date }}</td>
+                        <td>Student No : <span style="font-weight: 500;"> {{ single_student.student_number}} </span> </td>
                         <br>
-                        <td>Admission ID: {{ single_student.admission_id }}</td>
-                        <br>
-                        <td>Class: {{ single_student.class_type }}</td>
-                        <br>
-                        <td>Section: {{ single_student.section_type }}</td>
-                        <br>
-                        <td>Shift: {{ single_student.shift_type }}</td>
+                        <td>Class:<span style="font-weight: 500;">  {{ single_student.class_type }} </span> </td>
+                     
                     </tr>
                 </tbody>
             </div>
@@ -35,7 +34,10 @@
             </div>
             <div class="card-body">
 
-                <h6>{{ single_student.name }}</h6>
+                <div> Full Name : <span style="font-weight: 500;"> {{ single_student.full_name }} </span> </div>
+                   
+                <div> Email : <span style="font-weight: 500;">  {{ single_student.student_email }}</span> </div>
+                <div> cellphone : <span style="font-weight: 500;">  {{ single_student.student_cellphone }}</span> </div>
             </div>
         </div>
     </div>
@@ -45,17 +47,17 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
-                 <i class="fa fa-align-justify"></i> Fathers Info
+                 <i class="fa fa-align-justify"></i> Student Modules
             </div>
             <div class="card-body">
                 <tbody>
                     <tr>
-                        <td>Fathers Name: {{ single_student.fathers_name }}</td>
+                        {% for i in single_student.modules.all %}
+                        <td>{{i}}</td>
                         <br>
-                        <td>Fathers NID: {{ single_student.fathers_nid }}</td>
-                        <br>
-                        <td>Contact Number: {{ single_student.fathers_number }}</td>
-                        <br>
+                        {% empty %}
+                            Admin Has not assigned Modules Yet
+                        {% endfor %}
                     </tr>
                 </tbody>
             </div>
@@ -64,23 +66,24 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
-                 <i class="fa fa-align-justify"></i> Mothers Info
+                 <i class="fa fa-align-justify"></i> Lectures
             </div>
             <div class="card-body">
                 <tbody>
                     <tr>
-                        <td>Mothers Name: {{ single_student.mothers_name }}</td>
+                        {% for i in single_student.modules.all %}
+                        <td> <span style="font-weight: 500;">{{i.module_instructor.name.get_full_name}}</span>  - {{i}}</td>
                         <br>
-                        <td>Mothers NID: {{ single_student.mothers_nid }}</td>
-                        <br>
-                        <td>Contact Number: {{ single_student.mothers_number }}</td>
-                        <br>
+                        {% empty %}
+                            No Lecturers Assigned yet
+                        {% endfor %}
+                    </tr>
                     </tr>
                 </tbody>
             </div>
         </div>
     </div>
 </div>
-
+</div>
 {% endblock %}
 

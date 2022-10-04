@@ -14,16 +14,53 @@ def student_list(request):
     paginator = Paginator(students, 10)
     page = request.GET.get('page')
     paged_students = paginator.get_page(page)
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
+        
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
+           
+            
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
 
     context = {
-        "students": paged_students
+        "students": paged_students,
+           "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers
     }
     return render(request, "students/student_list.html", context)
 
 def single_student(request, student_id):
     single_student = get_object_or_404(StudentInfo, pk=student_id)
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
+        
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
+           
+            
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
+            
     context = {
-        "single_student": single_student
+        "single_student": single_student,
+        "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers
     }
     return render(request, "students/student_details.html", context)
 
@@ -34,6 +71,21 @@ def student_regi(request):
       else:
         # Process completed form.
         form = SignUpForm(data=request.POST)
+        if request.user.is_authenticated:
+            students = StudentInfo.objects.all()
+            teachers=TeacherInfo.objects.all()
+            
+            try:
+                logged_in_as_student = StudentInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_student = ""
+            
+                
+            try:
+                logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_teacher=""
+                
         
         if form.is_valid():
             new_user = form.save()
@@ -48,24 +100,49 @@ def student_regi(request):
           
             login(request, new_user)
             return redirect('home')
-      context = {'form': form}
+      context = {'form': form,   "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers}
       return render(request, 'students/register.html', context)
 
    
 def edit_student(request, pk):
     student_edit = StudentInfo.objects.get(id=pk)
     edit_forms = CreateStudent(instance=student_edit)
-
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
+        
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
+                
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
+            
     if request.method == "POST":
-        edit_forms = CreateStudent(request.POST, instance=student_edit)
+        #edit_forms = CreateStudent(request.POST, instance=student_edit)
+        edit_forms = CreateStudent(instance=student_edit, data=request.POST)
 
         if edit_forms.is_valid():
             edit_forms.save()
             messages.success(request, "Edit Student Info Successfully!")
-            return redirect("students:student_list")
+            if logged_in_as_student:
+                return redirect("home")
+            else:
+                return redirect("students:student_list")
 
     context = {
-        "edit_forms": edit_forms
+        "edit_forms": edit_forms,
+         "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers
+    
     }
     return render(request, "students/edit_student.html", context)
 
@@ -79,7 +156,29 @@ def attendance_count(request):
     class_name = request.GET.get("class_name", None)
     if class_name:
         student_list = StudentInfo.objects.filter(class_type__class_short_form=class_name)
-        context = {"student_list": student_list}
+        if request.user.is_authenticated:
+            students = StudentInfo.objects.all()
+            teachers=TeacherInfo.objects.all()
+            
+            try:
+                logged_in_as_student = StudentInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_student = ""
+            
+                
+            try:
+                logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_teacher=""
+                
+        context = {
+            "student_list": student_list,
+            "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers
+            
+            }
     else:
         context = {}
     return render(request, "students/attendance_count.html", context)

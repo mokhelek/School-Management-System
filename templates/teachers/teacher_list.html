@@ -6,7 +6,9 @@
 {% include 'partials/_alerts.html' %}
 
 <div class="row">
+   
     <div class="col-lg-12">
+        <br>
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-align-justify"></i> Teachers List</div>
@@ -15,7 +17,7 @@
                     <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Name</th>
+                            <th>Full Name</th>
                             <th>Email</th>
                             <th>Department</th>
                             <th>Subject</th>
@@ -27,7 +29,7 @@
                         {% for teacher in teachers %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ teacher.name }}</td>
+                                <td>{{ teacher.get_full_name }}</td>
                                 <td>{{ teacher.email }}</td>
                                 <td>{{ teacher.dept_type }}</td>
                                 <td>{{ teacher.sub_type }}</td>

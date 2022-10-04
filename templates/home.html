@@ -14,10 +14,14 @@
         <hr>
         <div >
            
-           <h5>full Name : {{logged_in_as_student}} </h5> 
-           <h5> Student No. : {{logged_in_as_student.name}} </h5> 
-           <h5> Student Email :  {{logged_in_as_student.student_email}}  </h5>
-        </div>
+        <span class="d-flex">  full Name :  <h5> &nbsp; {{logged_in_as_student}} </h5> </span> 
+       <span class="d-flex">  Student No. :  <h5> &nbsp;{{logged_in_as_student.name}} </h5> </span>  
+         <span class="d-flex">  Student Email :   <h5> &nbsp;{{logged_in_as_student.student_email}} </h5> </span> 
+
+         <div class="d-flex">   
+            <a href="{% url 'students:edit_student' logged_in_as_student.id %}"> Edit Details</a> &nbsp;|&nbsp;
+            <a href="{% url 'students:single_student' logged_in_as_student.id %}"> View All Details</a>
+        </div> 
         <hr>
 
         <div class="student-modules">
@@ -31,14 +35,18 @@
                         <div class="row">
                             <br>
                             <div class="col"> 
-                                <h6>lecturer : {{i.module_instructor.name.get_full_name}}</h6>
+                                <h6 >lecturer : {{i.module_instructor.name.get_full_name}}</h6>
                              </div>
                             
                         </div>
+                     
                         
                     </div>
-                   
+                    
                 </div>
+                {% empty %}
+                <br>
+                <h5 style="color: rgb(145, 145, 145);"> &nbsp;&nbsp;Admin Has Not Assigned Modules Yet</h5>
                 {% endfor %}
             </div>
           

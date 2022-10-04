@@ -30,5 +30,5 @@ class TeacherInfo(models.Model):
     #salary = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 

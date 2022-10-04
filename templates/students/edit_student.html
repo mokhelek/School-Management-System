@@ -1,21 +1,29 @@
 {% extends 'base/base.html' %}
 {% load static %}
-
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
+<div class="container-fluid" style="width: 98%;">
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h2>Edit Student Info</h2>
+        </div>
+        <div class="card-body">
+            <form action="" method="POST" class="form form-control">
+            {% csrf_token %}
+ 
+            {% bootstrap_form edit_forms %}
+            <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+    
 
-<div class="card">
-    <div class="card-header">
-        <h2>Edit Student Info</h2>
-    </div>
-    <div class="card-body">
-        <form action="" method="POST">
-        {% csrf_token %}
-        {{ edit_forms.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
 </div>
 
 {% endblock %}

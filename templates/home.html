@@ -4,11 +4,66 @@
 
 
 {% block content %}
-
+ <div class="container-fluid" style="width:95%">  
+     <br>
+     <!-- ################### Student Dashboard ####################################-->
     {% if logged_in_as_student in students %}
-        <h3> Home Page for Students </h3>
-        <p> Student features will show below?? </p>
 
+
+        <h3> Logged In As Student</h3>
+        <hr>
+        <div >
+           
+           <h5>full Name : {{logged_in_as_student}} </h5> 
+           <h5> Student No. : {{logged_in_as_student.name}} </h5> 
+           <h5> Student Email :  {{logged_in_as_student.student_email}}  </h5>
+        </div>
+        <hr>
+
+        <div class="student-modules">
+            <h2><strong>Modules</strong></h2>
+            <div class="row">
+                {% for i in logged_in_as_student.modules.all %}
+                <div class="col-4">
+                    <div class="card card-body" style="height: 200px;">
+                        <h5>  <strong> {{i}}</strong> </h5> 
+                        <h5>{{i.module_description|truncatechars:60}} </h5>
+                        <div class="row">
+                            <br>
+                            <div class="col"> 
+                                <h6>lecturer : {{i.module_instructor.name.get_full_name}}</h6>
+                             </div>
+                            
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+                {% endfor %}
+            </div>
+          
+        </div>
+
+
+
+
+       
+     
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ################### End of Student Dashboard ####################################-->
     {% elif logged_in_as_teacher in teachers %}    
         <h3>Home Page for Teachers</h3>
         <p> Teacher features will show below?? </p>
@@ -16,7 +71,7 @@
         <h3>Home Page for Admin</h3>
         <p> Admin features will show below?? </p>
     {% endif %}
-
+</div>
 
 
 

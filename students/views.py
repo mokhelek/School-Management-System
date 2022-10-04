@@ -87,7 +87,9 @@ def attendance_count(request):
 
 
 def register(request):
- 
+    students = StudentInfo.objects.all()
+    teachers=TeacherInfo.objects.all()
+    
     if request.method != 'POST':
         # Display blank registration form. 
         form = SignUpForm()
@@ -106,8 +108,37 @@ def register(request):
 
             new_user.save()
           
-            login(request, new_user)
-            return redirect('home')
+            
+            
+            try:
+                logged_in_as_student = StudentInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_student = ""
+           
+            
+            try:
+                logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+            except:
+                logged_in_as_teacher=""
+                
+                
+                
+            if logged_in_as_student in students:
+                login(request, new_user)
+                return redirect('home')
+            
+            elif logged_in_as_teacher:
+                login(request, new_user)
+                return redirect('home')
+            else:
+                return redirect('home')
+                
+            
+            
+            
+        
+        
+        
     context = {'form': form}
     return render(request, 'students/registration/register.html', context)
 

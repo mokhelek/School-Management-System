@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+    {% if logged_in_as_student in students %}
+        <h3> Home Page for Students </h3>
+        <p> Student features will show below?? </p>
+
+    {% elif logged_in_as_teacher in teachers %}    
+        <h3>Home Page for Teachers</h3>
+        <p> Teacher features will show below?? </p>
+    {% else %}
+        <h3>Home Page for Admin</h3>
+        <p> Admin features will show below?? </p>
+    {% endif %}
+
+
+
+
+{% endblock %}

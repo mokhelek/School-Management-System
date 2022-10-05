@@ -19,9 +19,9 @@
                             <th>SL</th>
                             <th>Full Name</th>
                             <th>Email</th>
-                            <th>Department</th>
-                            <th>Subject</th>
-                            <th>Joining Date</th>
+                            <th>Faculty</th>
+                            <th>Module</th>
+                           
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -29,11 +29,11 @@
                         {% for teacher in teachers %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ teacher.get_full_name }}</td>
-                                <td>{{ teacher.email }}</td>
-                                <td>{{ teacher.dept_type }}</td>
-                                <td>{{ teacher.sub_type }}</td>
-                                <td>{{ teacher.joining_date }}</td>
+                                <td>{{ teacher.full_name }}</td>
+                                <td>{{ teacher.teacher_email }}</td>
+                                <td>{{ teacher.Faculty }}</td>
+                                <td> {{teacher.module.module_name}}</td>
+                             
                                 <td>
                                     <a href="{% url 'teachers:single_teacher' teacher.id %}">
                                         <button type="button" class="btn btn-primary">Details</button>

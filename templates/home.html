@@ -35,7 +35,7 @@
                         <div class="row">
                             <br>
                             <div class="col"> 
-                                <h6 >lecturer : {{i.module_instructor.name.get_full_name}}</h6>
+                                <h6 >lecturer : {{i.teacherinfo_set.name}}</h6>
                              </div>
                             
                         </div>
@@ -51,7 +51,7 @@
             </div>
           
         </div>
-
+<!-- ################### End of Student Dashboard ####################################-->
 
 
 
@@ -71,10 +71,63 @@
 
 
 
-<!-- ################### End of Student Dashboard ####################################-->
+<!-- ################### Teachers Dashboard ####################################-->
     {% elif logged_in_as_teacher in teachers %}    
-        <h3>Home Page for Teachers</h3>
-        <p> Teacher features will show below?? </p>
+        
+    <h3> Logged In As Teacher</h3>
+    <hr>
+    <div >
+       
+    <span class="d-flex">  full Name :  <h5> &nbsp; {{logged_in_as_teacher.full_name}} </h5> </span> 
+   <span class="d-flex">  teacher No. :  <h5> &nbsp;{{logged_in_as_teacher.name}} </h5> </span>  
+     <span class="d-flex">  teacher Email :   <h5> &nbsp;{{logged_in_as_teacher.teacher_email}} </h5> </span> 
+     <div class="d-flex">   
+        <a href="{% url 'teachers:edit_teacher' logged_in_as_teacher.id %}"> Edit Details</a> &nbsp;|&nbsp;
+        <a href="{% url 'teachers:single_teacher' logged_in_as_teacher.id %}"> View All Details</a>
+    </div> 
+     {{ logged_in_as_teacher.module}}
+     <hr>
+
+     <div class="row">
+         <div class="col-4">
+           
+            <div class="card card-body">
+                <center>  
+             <h1> {{enrolled_students|length}} </h1>   
+             <h5> Total Number Of Students </h5>   
+             <a href="{% url 'students:student_list' %}"> view enrolled students</a>
+            </center>
+            </div>
+         </div>
+         <div class="col-4">
+             
+        </div>
+     </div>
+  
+         
+
+<!-- ################### End of Teachers Dashboard ####################################-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {% else %}
         <h3>Home Page for Admin</h3>
         <p> Admin features will show below?? </p>

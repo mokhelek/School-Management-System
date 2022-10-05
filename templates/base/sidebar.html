@@ -55,7 +55,11 @@
                         </ul>
                     </li>
                         </div>
-                {% else %}
+
+
+
+
+                {% elif logged_in_as_teacher in teachers %}
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="nav-icon icon-user"></i> Student</a>
@@ -66,7 +70,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'students:attendance_count' %}">
-                                <i class="nav-icon icon-puzzle"></i> Attendance XXX</a>
+                                <i class="nav-icon icon-puzzle"></i> Attendance </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'students:student_regi' %}">
@@ -74,20 +78,40 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link nav-dropdown-toggle" href="#">
-                        <i class="nav-icon icon-user"></i> Teachers</a>
-                    <ul class="nav-dropdown-items">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'teachers:teacher_list' %}">
-                                <i class="nav-icon icon-puzzle"></i> Teacher List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'teachers:create_teacher' %}">
-                                <i class="nav-icon icon-puzzle"></i> Create New Teacher</a>
-                        </li>
-                    </ul>
-                </li>
+          
+                {% else %}
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Student</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'students:student_list' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Student List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'students:attendance_count' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Attendance </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'students:student_regi' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Registration</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Teachers</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'teachers:teacher_list' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Teacher List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'teachers:create_teacher' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Create New Teacher</a>
+                            </li>
+                        </ul>
+                    </li>
             {% endif %}
         </ul>
     </nav>

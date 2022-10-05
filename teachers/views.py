@@ -83,7 +83,7 @@ def register(request):
             get_id = form.instance.id  # get the id of a use--it has a username inside
             users = User.objects.get(id=get_id) # get the new user
             print(users)
-            studentProfiles = TeacherInfo.objects.create( name = users)
+            studentProfiles = TeacherInfo.objects.create( name = users , teacher_email=users.email,full_name=users.get_full_name())
             studentProfiles.save()
 
             new_user.save()

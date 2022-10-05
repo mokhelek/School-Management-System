@@ -5,8 +5,10 @@
 
 {% include 'partials/_alerts.html' %}
 
-<div class="row">
+{% if logged_in_as_student in students %}
+<div class="row d-none">
     <div class="col-lg-12">
+        <br>
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-align-justify"></i> Students List</div>
@@ -52,6 +54,120 @@
         </div>
     </div>
 </div>
+{% elif logged_in_as_teacher in teachers %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Students List</div>
+            <div class="card-body">
+                <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                          
+                            <th>Fullname</th>
+                            <th>Student No.</th>
+                            <th>Email</th>
+                            <th>Sex</th>
+                           
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            {% if logged_in_as_teacher.module in student.modules.all %}
+                            <tr>
+                              
+                                <td>{{ student.full_name}}</td>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.student_email }}</td>
+                                
+                               
+                                <td>{{ student.gender}}</td>
+                                <td>
+                                    <a href="{% url 'students:single_student' student.id %}">
+                                        <button type="button" class="btn btn-primary">Details</button>
+                                    </a>
+                                    <a href="{% url 'students:edit_student' student.id %}">
+                                        <button type="button" class="btn btn-info"><i class="fa fa-edit"></i></button>
+                                    </a>
+                                    <a href="{% url 'students:delete_student' student.id %}">
+                                        <button type="button" class="btn btn-danger">X</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% else %}
+<div class="row">
+    <div class="col-lg-12">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Students List</div>
+            <div class="card-body">
+                <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            
+                            <th>Fullname</th>
+                            <th>Student No.</th>
+                            <th>Email</th>
+                            <th>Sex</th>
+                           
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                
+                                <td>{{ student.full_name}}</td>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.student_email }}</td>
+                                
+                               
+                                <td>{{ student.gender}}</td>
+                                <td>
+                                    <a href="{% url 'students:single_student' student.id %}">
+                                        <button type="button" class="btn btn-primary">Details</button>
+                                    </a>
+                                    <a href="{% url 'students:edit_student' student.id %}">
+                                        <button type="button" class="btn btn-info"><i class="fa fa-edit"></i></button>
+                                    </a>
+                                    <a href="{% url 'students:delete_student' student.id %}">
+                                        <button type="button" class="btn btn-danger">X</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
 
 <div class="container col-12"> 
     <div class="pagination">

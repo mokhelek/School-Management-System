@@ -4,12 +4,6 @@ from django.contrib.auth.models import User
 from teachers.models import TeacherInfo
 # Create your models here.
 
-class StudentModules(models.Model):
-    module_name = models.CharField(max_length=80 , null=True , blank=True)
-    module_description = models.CharField(max_length=200 , null=True , blank=True)
-    module_instructor = models.ForeignKey(TeacherInfo, on_delete=models.CASCADE ,default=1 )
-    def __str__(self):
-        return self.module_name
 
 class Venues(models.Model):
     venue_name = models.CharField(max_length=255) 
@@ -23,6 +17,14 @@ class StudentSession(models.Model):
     session_venue = models.ForeignKey(Venues, on_delete=models.CASCADE ,default="No Instructor Yet")
     def __str__(self):
         return self.section_name
+    
+class StudentModules(models.Model):
+    module_name = models.CharField(max_length=80 , null=True , blank=True)
+    module_description = models.CharField(max_length=200 , null=True , blank=True)
+    #module_instructor = models.ForeignKey(TeacherInfo, on_delete=models.SET_NULL, null=True )
+    session = models.ForeignKey(StudentSession, on_delete=models.CASCADE ,null=True , blank =True)
+    def __str__(self):
+        return self.module_name
 
 
 class StudentInfo(models.Model):

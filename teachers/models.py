@@ -18,7 +18,7 @@ class TeacherInfo(models.Model):
     name = models.OneToOneField(User, on_delete=models.CASCADE ,default=1 )
     full_name = models.CharField(max_length=100 ,null=True,blank=True )
     teacher_email = models.EmailField(unique=True ,null=True,blank=True)
-   
+    teacher_cellphone = models.CharField(max_length=100 ,null=True,blank=True )
     gender_choice = (
         ("male", "Male"),
         ("Female", "Female"),
@@ -37,5 +37,5 @@ class TeacherInfo(models.Model):
     Faculty = models.CharField( choices=faculty_choice, max_length=100 ,null=True,blank=True )
 
     def __str__(self):
-        return str(self.name)
+        return str(self.full_name)
 

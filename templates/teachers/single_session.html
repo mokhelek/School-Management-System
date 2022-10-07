@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+    {% include 'partials/_alerts.html' %}
+    <br>
+    <h4> <strong>  {{session.session_name }} </strong> </h3>
+        <h5> {{session.session_description }} </h5>
+        
+        
+        {% with session.module.teacher_modules.all as lecturers %}
+            {% for i in lecturers %}
+        <div class="d-flex">  Lecturer &nbsp;&nbsp; <a href="#"> <strong> {{i.full_name}} </strong>  </a> </div> 
+            {% endfor %}
+        {% endwith %}
+        <h6>posted by  on {{session.date_added}}</h6>
+        <hr>
+        <h6> module : {{session.module.module_name}} </h6>
+        <h6> session date : {{session.session_date }}</h6>
+        <h6>session time : {{session.session_time }}</h6>
+        <h6> venue : {{session.session_venue.venue_name }} </h6>  
+
+        <br>
+        <br><br>
+        <a href="#" class="btn btn-success"> mark attendece</a>
+    
+
+{% endblock %}
+

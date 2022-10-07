@@ -11,5 +11,7 @@ urlpatterns = [
     path('delete/<int:teacher_id>', views.delete_teacher, name='delete_teacher'),
     
     path('register/', views.register, name='register'),
+    path('session/', views.session, name='session'),
+    path('single_session/<int:session_id>/', views.single_session, name='single_session'),
 ]
 

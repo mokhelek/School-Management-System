@@ -72,10 +72,13 @@
                 <tbody>
                     <tr>
                         {% for i in single_student.modules.all %}
-                        <td> <span style="font-weight: 500;">{{i.teacherinfo_set.full_name}}</span>  - {{i}}</td>
-                        <br>
-                        {% empty %}
-                            No Lecturers Assigned yet
+                            {% with i.teacher_modules.all as lecturers %}
+                                {% for lecturer in lecturers %}
+                                    <td style="font-weight: 500;">  {{ lecturer.full_name }} -- {{lecturer.module.module_name}} </td>
+                                    <br>
+                                {% endfor %}
+                            {% endwith %}
+                              
                         {% endfor %}
                     </tr>
                     </tr>

@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 from .forms import CreateTeacher
 from django.contrib import messages
 from django.core.paginator import Paginator
-from .forms import SignUpForm
+from .forms import SignUpForm , SessionForm
 from django.contrib.auth import login
+from students.models import *
 # Create your views here.
 def teacher_list(request):
     teachers = TeacherInfo.objects.all()
@@ -21,8 +22,26 @@ def teacher_list(request):
 
 def single_teacher(request, teacher_id):
     single_teacher = get_object_or_404(TeacherInfo, pk=teacher_id)
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
+        
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
+           
+            
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
     context = {
-        "single_teacher": single_teacher
+        "single_teacher": single_teacher,
+          "logged_in_as_student":logged_in_as_student,
+        "logged_in_as_teacher": logged_in_as_teacher,
+        "students":students,
+        "teachers":teachers
     }
     return render(request, "teachers/single_teacher.html", context)
 
@@ -93,3 +112,22 @@ def register(request):
     context = {'form': form}
     return render(request, 'teachers/registration/register.html', context)
 
+
+def session(request):
+    if request.method == "POST":
+        form = SessionForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+        messages.success(request, "Session created Successfully!")
+        return redirect("home")
+    else:
+        form = SessionForm()
+
+    context = {'form': form}
+    return render(request, "teachers/session.html" , context  )
+
+def single_session(request, session_id):
+    session = StudentSession.objects.get(id=session_id)
+    context = {"session":session}
+    return render(request,"teachers/single_session.html",context)

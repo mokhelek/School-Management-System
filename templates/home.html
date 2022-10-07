@@ -24,6 +24,16 @@
         </div> 
         <hr>
 
+
+        <div class="sessions" style="height: 4cm;">
+            <h2><strong>Sessions</strong></h2>
+            {% for session in student_sessions %}
+                <h6>  <a style="text-decoration:underline;" href="{% url 'teachers:single_session' session.id %}"> {{session.session_name}} </a>  </h5>    
+            {% endfor %}
+        </div>
+
+
+
         <div class="student-modules">
             <h2><strong>Modules</strong></h2>
             <div class="row">
@@ -35,7 +45,14 @@
                         <div class="row">
                             <br>
                             <div class="col"> 
-                                <h6 >lecturer : {{i.teacherinfo_set.name}}</h6>
+
+                                {% with i.teacher_modules.all as lecturers %} 
+                                    {% for lecturer in lecturers %}
+                                      <h6 class="d-flex"> lecture :  <a href="{% url 'teachers:single_teacher' lecturer.id %}"> {{lecturer.full_name}} </a>  </h6>  
+                                      {% empty %}
+                                       <h6>No Lecturer</h6>
+                                    {% endfor %}
+                                {% endwith %}
                              </div>
                             
                         </div>
@@ -58,11 +75,6 @@
        
      
     
-
-
-
-
-
 
 
 
@@ -100,7 +112,7 @@
             </div>
          </div>
          <div class="col-4">
-             
+             <a href="{% url 'teachers:session' %}"> Create New Session</a>
         </div>
      </div>
   

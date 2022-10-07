@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+    {% include 'partials/_alerts.html' %}
+    <br>
+    <div class="container"> 
+        <form method="post" action="{% url 'teachers:session' %}">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            
+            {% buttons %}
+            <button class="btn btn-outline-success btn-sm" name="submit">Create</button>
+            {% endbuttons %}
+         
+        </form>
+    </div>
+
+{% endblock %}

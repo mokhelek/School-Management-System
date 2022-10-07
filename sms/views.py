@@ -10,6 +10,7 @@ def index(request):
         teachers=TeacherInfo.objects.all()
         enrolled_students = []
         
+        
         try:
             logged_in_as_student = StudentInfo.objects.get(name= request.user)
         except:
@@ -28,21 +29,36 @@ def index(request):
                     enrolled_students.append(i)
         except:
             enrolled_students = []
-            
-                
-        context = {"students":students, 
+        
+        if logged_in_as_student:     
+            student_sessions = StudentSession.objects.filter(module__in=logged_in_as_student.modules.all()).order_by("-date_added")
+            context = {"students":students, 
                    "logged_in_as_student":logged_in_as_student,
                    "logged_in_as_teacher":logged_in_as_teacher,
                    "teachers":teachers,
                    "enrolled_students":enrolled_students,
-                   }
+                   "student_sessions":student_sessions
+                   } 
+        else:
+            context = {"students":students, 
+                    "logged_in_as_student":logged_in_as_student,
+                    "logged_in_as_teacher":logged_in_as_teacher,
+                    "teachers":teachers,
+                    "enrolled_students":enrolled_students,
+                   
+                    }
         return render(request, "home.html", context)
     
     
     else:
         logged_in_as_student = ""
         logged_in_as_teacher = ""
-        context = {"students":students, "logged_in_as_student":logged_in_as_student,"logged_in_as_teacher":logged_in_as_teacher,"teachers":teachers}
+        enrolled_students = []
+        context = {"students":students,
+                   "logged_in_as_student":logged_in_as_student,
+                   "logged_in_as_teacher":logged_in_as_teacher,
+                   "teachers":teachers
+                   }
         return render(request, "home.html", context)
 
 

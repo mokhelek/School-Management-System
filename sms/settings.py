@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'students.apps.StudentsConfig',
     'teachers.apps.TeachersConfig',
+    'admins.apps.AdminsConfig',
     #'api.apps.ApiConfig',
 ]
 

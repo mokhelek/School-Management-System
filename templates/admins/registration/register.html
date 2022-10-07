@@ -1,0 +1,20 @@
+
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+<br>
+<div class="container"> 
+    <form method="post" action="{% url 'admins:register' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        
+        {% buttons %}
+        <button class="btn btn-outline-success btn-sm" name="submit">Register</button>
+        {% endbuttons %}
+     
+    </form>
+</div>
+ 
+

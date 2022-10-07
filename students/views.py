@@ -71,6 +71,20 @@ def student_regi(request):
       else:
         # Process completed form.
         form = SignUpForm(data=request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            get_id = form.instance.id  # get the id of a use--it has a username inside
+            users = User.objects.get(id=get_id) # get the new user
+            print(users.email)
+            print(users)
+            studentProfiles = StudentInfo.objects.create( name = users, full_name=users.get_full_name() ,student_email = users.email)
+            studentProfiles.save()
+
+            new_user.save()
+          
+            login(request, new_user)
+            return redirect('home')
+        
         if request.user.is_authenticated:
             students = StudentInfo.objects.all()
             teachers=TeacherInfo.objects.all()
@@ -86,25 +100,12 @@ def student_regi(request):
             except:
                 logged_in_as_teacher=""
                 
-        
-        if form.is_valid():
-            new_user = form.save()
-            get_id = form.instance.id  # get the id of a use--it has a username inside
-            users = User.objects.get(id=get_id) # get the new user
-            print(users.email)
-            print(users)
-            studentProfiles = StudentInfo.objects.create( name = users, full_name=users.get_full_name() ,student_email = users.email)
-            studentProfiles.save()
-
-            new_user.save()
-          
-            login(request, new_user)
-            return redirect('home')
-      context = {'form': form,   "logged_in_as_student":logged_in_as_student,
-        "logged_in_as_teacher": logged_in_as_teacher,
-        "students":students,
-        "teachers":teachers}
-      return render(request, 'students/register.html', context)
+        context = {'form': form,   
+                       "logged_in_as_student":logged_in_as_student,
+                        "logged_in_as_teacher": logged_in_as_teacher,
+                        "students":students,
+                        "teachers":teachers}
+        return render(request, 'students/register.html', context)  
 
    
 def edit_student(request, pk):
@@ -150,7 +151,7 @@ def delete_student(request, student_id):
     student_delete = StudentInfo.objects.get(id=student_id)
     student_delete.delete()
     messages.success(request, "Delete Student Info Successfully")
-    return redirect("student:student_list")
+    return redirect("students:student_list")
 
 def attendance_count(request):
     class_name = request.GET.get("class_name", None)

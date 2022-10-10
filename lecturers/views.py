@@ -85,7 +85,7 @@ def delete_teacher(request, teacher_id):
     teacher_delete = TeacherInfo.objects.get(id=teacher_id)
     teacher_delete.delete()
     messages.success(request, "Delete Teacher Info Successfully")
-    return redirect("teachers:teacher_list")
+    return redirect("lecturers:teacher_list")
 
 
 def register(request):

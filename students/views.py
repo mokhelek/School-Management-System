@@ -65,47 +65,51 @@ def single_student(request, student_id):
     return render(request, "students/student_details.html", context)
 
 def student_regi(request):
-      if request.method != 'POST':
-        # Display blank registration form. 
-        form = SignUpForm()
-      else:
-        # Process completed form.
-        form = SignUpForm(data=request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            get_id = form.instance.id  # get the id of a use--it has a username inside
-            users = User.objects.get(id=get_id) # get the new user
-            print(users.email)
-            print(users)
-            studentProfiles = StudentInfo.objects.create( name = users, full_name=users.get_full_name() ,student_email = users.email)
-            studentProfiles.save()
-
-            new_user.save()
-          
-            login(request, new_user)
-            return redirect('home')
+    if request.method != 'POST':
         
-        if request.user.is_authenticated:
-            students = StudentInfo.objects.all()
-            teachers=TeacherInfo.objects.all()
+        form = SignUpForm()
+    else:
+        
+       
+                    
+            form = SignUpForm(data=request.POST)
+            if form.is_valid():
+                new_user = form.save()
+                get_id = form.instance.id  # get the id of a use--it has a username inside
+                users = User.objects.get(id=get_id) # get the new user
+                studentProfiles = StudentInfo.objects.create( name = users, full_name=users.get_full_name() ,student_email = users.email)
+                studentProfiles.save()
+
+                new_user.save()
+        
+                login(request, new_user)
+                return redirect('home')
             
-            try:
-                logged_in_as_student = StudentInfo.objects.get(name= request.user)
-            except:
-                logged_in_as_student = ""
-            
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
                 
-            try:
-                logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
-            except:
-                logged_in_as_teacher=""
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
                 
-        context = {'form': form,   
-                       "logged_in_as_student":logged_in_as_student,
+                    
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
+                
+    context = {'form': form,   
+                        "logged_in_as_student":logged_in_as_student,
                         "logged_in_as_teacher": logged_in_as_teacher,
                         "students":students,
                         "teachers":teachers}
-        return render(request, 'students/register.html', context)  
+    return render(request, 'students/register.html', context)    
+ 
+           
+    
+
 
    
 def edit_student(request, pk):
@@ -187,8 +191,7 @@ def attendance_count(request):
 
 
 def register(request):
-    students = StudentInfo.objects.all()
-    teachers=TeacherInfo.objects.all()
+
     
     if request.method != 'POST':
         # Display blank registration form. 
@@ -207,23 +210,53 @@ def register(request):
             studentProfiles.save()
 
             new_user.save()
-          
+            login(request, new_user)
+            return redirect('home')
             
+    if request.user.is_authenticated:
+        students = StudentInfo.objects.all()
+        teachers=TeacherInfo.objects.all()
             
-            try:
-                logged_in_as_student = StudentInfo.objects.get(name= request.user)
-            except:
-                logged_in_as_student = ""
-           
+        try:
+            logged_in_as_student = StudentInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_student = ""
             
-            try:
-                logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
-            except:
-                logged_in_as_teacher=""
                 
+        try:
+            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
+        except:
+            logged_in_as_teacher=""
+        context = {
+            'form': form,
+            "logged_in_as_student":logged_in_as_student,
+            "logged_in_as_teacher": logged_in_as_teacher,
+            "students":students,
+            "teachers":teachers               
+                    }
                 
+
+    context = { 'form': form,}
+             
+      
+    return render(request, 'students/registration/register.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 
-            if logged_in_as_student in students:
+"""           
+if logged_in_as_student in students:
                 login(request, new_user)
                 return redirect('home')
             
@@ -232,29 +265,5 @@ def register(request):
                 return redirect('home')
             else:
                 return redirect('home')
-                
-            
-            
-            
-        
-        
-        
-    context = {'form': form}
-    return render(request, 'students/registration/register.html', context)
-
-"""
- if request.method == "POST":
-        forms = CreateStudent(request.POST)
-
-        if forms.is_valid():
-            forms.save()
-        messages.success(request, "Student Registration Successfully!")
-        return redirect("students:student_list")
-    else:
-        forms = CreateStudent()
-
-    context = {
-        "forms": forms
-    }
-    return render(request, "students/registration.html", context)
-"""
+   
+        """

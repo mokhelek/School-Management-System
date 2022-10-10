@@ -8,7 +8,7 @@ class TeacherDeptInfo(models.Model):
     def __str__(self):
         return self.dept_name
 
-class TeacherSubInfo(models.Model):
+class lecturersubInfo(models.Model):
     sub_name = models.CharField(max_length=50)
 
     def __str__(self):

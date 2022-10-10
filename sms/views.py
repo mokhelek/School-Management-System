@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from students.models import *
-from teachers.models import *
+from lecturers.models import *
 
 @login_required
 def index(request):

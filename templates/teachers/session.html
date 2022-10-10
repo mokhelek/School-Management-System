@@ -8,7 +8,7 @@
     {% include 'partials/_alerts.html' %}
     <br>
     <div class="container"> 
-        <form method="post" action="{% url 'teachers:session' %}">
+        <form method="post" action="{% url 'lecturers:session' %}">
             {% csrf_token %}
             {% bootstrap_form form %}
             

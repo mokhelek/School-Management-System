@@ -28,7 +28,10 @@
         <div class="sessions" style="height: 4cm;">
             <h2><strong>Sessions</strong></h2>
             {% for session in student_sessions %}
-                <h6>  <a style="text-decoration:underline;" href="{% url 'teachers:single_session' session.id %}"> {{session.session_name}} </a>  </h5>    
+                <h6>  <a style="text-decoration:underline;" href="{% url 'lecturers:single_session' session.id %}"> {{session.session_name}} </a>  </h5>  
+            {% empty %}  
+          
+            <h5 style="color: rgb(145, 145, 145);"> Lecturer Has Not made sessions yet</h5>
             {% endfor %}
         </div>
 
@@ -48,7 +51,7 @@
 
                                 {% with i.teacher_modules.all as lecturers %} 
                                     {% for lecturer in lecturers %}
-                                      <h6 class="d-flex"> lecture :  <a href="{% url 'teachers:single_teacher' lecturer.id %}"> {{lecturer.full_name}} </a>  </h6>  
+                                      <h6 class="d-flex"> lecture :  <a href="{% url 'lecturers:single_teacher' lecturer.id %}"> {{lecturer.full_name}} </a>  </h6>  
                                       {% empty %}
                                        <h6>No Lecturer</h6>
                                     {% endfor %}
@@ -83,10 +86,10 @@
 
 
 
-<!-- ################### Teachers Dashboard ####################################-->
+<!-- ################### Lecturers Dashboard ####################################-->
     {% elif logged_in_as_teacher in teachers %}    
         
-    <h3> Logged In As Teacher</h3>
+    <h3> Logged In As Lecturer</h3>
     <hr>
     <div >
        
@@ -94,8 +97,8 @@
    <span class="d-flex">  teacher No. :  <h5> &nbsp;{{logged_in_as_teacher.name}} </h5> </span>  
      <span class="d-flex">  teacher Email :   <h5> &nbsp;{{logged_in_as_teacher.teacher_email}} </h5> </span> 
      <div class="d-flex">   
-        <a href="{% url 'teachers:edit_teacher' logged_in_as_teacher.id %}"> Edit Details</a> &nbsp;|&nbsp;
-        <a href="{% url 'teachers:single_teacher' logged_in_as_teacher.id %}"> View All Details</a>
+        <a href="{% url 'lecturers:edit_teacher' logged_in_as_teacher.id %}"> Edit Details</a> &nbsp;|&nbsp;
+        <a href="{% url 'lecturers:single_teacher' logged_in_as_teacher.id %}"> View All Details</a>
     </div> 
      {{ logged_in_as_teacher.module}}
      <hr>
@@ -112,13 +115,13 @@
             </div>
          </div>
          <div class="col-4">
-             <a href="{% url 'teachers:session' %}"> Create New Session</a>
+             <a href="{% url 'lecturers:session' %}"> Create New Session</a>
         </div>
      </div>
   
          
 
-<!-- ################### End of Teachers Dashboard ####################################-->
+<!-- ################### End of lecturers Dashboard ####################################-->
 
 
 
@@ -141,8 +144,41 @@
 
 
     {% else %}
-        <h3>Home Page for Admin</h3>
-        <p> Admin features will show below?? </p>
+        <h3>Logged in as Admin</h3>
+        <hr>
+        <div class="row">
+            <div class="col-4">
+                <div class="card card-body">
+                    <center>
+                        <h1>
+                            <strong>
+                                {{students.count}}
+                            </strong>
+                        </h1>
+                        <p>
+                            Total enrolled students
+                        </p>
+                        <a href="{% url 'students:student_list' %}">view students</a>
+                    </center>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card card-body">
+                    <center>
+                        <h1>
+                            <strong>
+                                {{teachers.count}}
+                            </strong>
+                        </h1>
+                        <p>
+                            Total employed lecturers
+                        </p>
+                        <a href="{% url 'lecturers:teacher_list' %}">view lecturers</a>
+                    </center>
+                </div>
+            </div>
+        </div>
     {% endif %}
 </div>
 

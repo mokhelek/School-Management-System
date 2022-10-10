@@ -4,7 +4,7 @@
 {% bootstrap_javascript %}
 <br>
 <div class="container"> 
-    <form method="post" action="{% url 'teachers:register' %}">
+    <form method="post" action="{% url 'lecturers:register' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
         

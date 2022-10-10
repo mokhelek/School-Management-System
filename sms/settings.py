@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     # Our Created Accounts
     'accounts.apps.AccountsConfig',
     'students.apps.StudentsConfig',
-    'teachers.apps.TeachersConfig',
+    'lecturers.apps.lecturersConfig',
     'admins.apps.AdminsConfig',
     #'api.apps.ApiConfig',
 ]

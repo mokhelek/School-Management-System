@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid" style="width: 100%;">
+
+<br>
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i>  Admin Personal Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        <td>Full Name: {{ single_admin.full_name }}</td>
+                        <br>
+                        <td>Email: {{ single_admin.admin_email }}</td>
+                        <br>
+                        <td>Admin Cellphone: {{ single_admin.admin_cellphone}}</td>
+                        <br>
+                        <td>Gender: {{ single_admin.gender }}</td>
+                        <br>
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Lecturer Academic Info
+            </div>
+            <div class="card-body">
+
+                <h6>Faculty: {{ single_teacher.Faculty }}</h6>
+                <h6>Module: {{ single_teacher.module.module_name}}</h6>
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                 <i class="fa fa-align-justify"></i> Admin Image
+            </div>
+            <div class="card-body">
+                <img src="{{ single_teacher.teacher_img.url }}" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+

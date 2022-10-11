@@ -144,11 +144,11 @@
                             <i class="nav-icon icon-user"></i> admins</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'admins:admin_list' %}">
                                     <i class="nav-icon icon-puzzle"></i> admins List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'admins:create_admin' %}">
                                     <i class="nav-icon icon-puzzle"></i> Add New admin</a>
                             </li>
                         </ul>

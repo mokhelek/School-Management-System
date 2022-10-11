@@ -127,6 +127,14 @@
         <h3>Logged in as Admin</h3>
        
         <hr>
+        <span class="d-flex">  full Name :  <h5> &nbsp; {{logged_in_as_admin.full_name}} </h5> </span> 
+        
+          <span class="d-flex">  admin Email :   <h5> &nbsp;{{logged_in_as_admin.admin_email}} </h5> </span> 
+          <div class="d-flex">   
+             <a href="{% url 'admins:edit_admin' logged_in_as_admin.id %}"> Edit Details</a> &nbsp;|&nbsp;
+             <a href="{% url 'admins:single_admin' logged_in_as_admin.id %}"> View All Details</a>
+         </div> 
+         <hr>
         <div class="row">
             <div class="col-4">
                 <div class="card card-body">
@@ -213,7 +221,7 @@
                         <p>
                             Total employed administrators
                         </p>
-                        <a href="#">view admins</a>
+                        <a href="{% url 'admins:admin_list' %}">view admins</a>
                     </center>
                 </div>
             </div>

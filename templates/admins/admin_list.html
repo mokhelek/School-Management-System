@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<div class="row">
+   
+    <div class="col-lg-12">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> lecturers List</div>
+            <div class="card-body">
+                <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            
+                           
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admin in admins %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ admin.full_name }}</td>
+                                <td>{{ admin.admin_email }}</td>
+                              
+                             
+                                <td>
+                                    <a href="{% url 'admins:single_admin' admin.id %}">
+                                        <button type="button" class="btn btn-primary">Details</button>
+                                    </a>
+                                    <a href="{% url 'admins:edit_admin' admin.id %}">
+                                        <button type="button" class="btn btn-info"><i class="fa fa-edit"></i></button>
+                                    </a>
+                                    <a href="{% url 'admins:delete_admin' admin.id %}">
+                                        <button type="button" class="btn btn-danger">X</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+

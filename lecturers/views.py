@@ -17,7 +17,7 @@ def teacher_list(request):
     context = {
         "teachers": paged_teachers
     }
-    return render(request, "teachers/teacher_list.html", context)
+    return render(request, "lecturers/teacher_list.html", context)
 
 
 def single_teacher(request, teacher_id):
@@ -27,7 +27,7 @@ def single_teacher(request, teacher_id):
         "single_teacher": single_teacher,
        
     }
-    return render(request, "teachers/single_teacher.html", context)
+    return render(request, "lecturers/single_teacher.html", context)
 
 
 def create_teacher(request):
@@ -37,14 +37,14 @@ def create_teacher(request):
         if forms.is_valid():
             forms.save()
         messages.success(request, "Teacher Registration Successfully!")
-        return redirect("teachers:teacher_list")
+        return redirect("lecturers:teacher_list")
     else:
         forms = CreateTeacher()
 
     context = {
         "forms": forms
     }
-    return render(request, "teachers/create_teacher.html", context)
+    return render(request, "lecturers/create_teacher.html", context)
 
 
 def edit_teacher(request, pk):
@@ -62,7 +62,7 @@ def edit_teacher(request, pk):
     context = {
         "edit_teacher_forms": edit_teacher_forms
     }
-    return render(request, "teachers/edit_teacher.html", context)
+    return render(request, "lecturers/edit_teacher.html", context)
 
 
 def delete_teacher(request, teacher_id):
@@ -94,7 +94,7 @@ def register(request):
             login(request, new_user)
             return redirect('home')
     context = {'form': form}
-    return render(request, 'teachers/registration/register.html', context)
+    return render(request, 'lecturers/registration/register.html', context)
 
 
 def session(request):
@@ -109,9 +109,9 @@ def session(request):
         form = SessionForm()
 
     context = {'form': form}
-    return render(request, "teachers/session.html" , context  )
+    return render(request, "lecturers/session.html" , context  )
 
 def single_session(request, session_id):
     session = StudentSession.objects.get(id=session_id)
     context = {"session":session}
-    return render(request,"teachers/single_session.html",context)
+    return render(request,"lecturers/single_session.html",context)

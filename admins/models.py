@@ -14,6 +14,7 @@ class AdminInfo(models.Model):
         ("Female", "Female"),
     )
     gender = models.CharField(choices=gender_choice, max_length=10) 
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.full_name)

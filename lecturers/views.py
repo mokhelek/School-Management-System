@@ -22,26 +22,10 @@ def teacher_list(request):
 
 def single_teacher(request, teacher_id):
     single_teacher = get_object_or_404(TeacherInfo, pk=teacher_id)
-    if request.user.is_authenticated:
-        students = StudentInfo.objects.all()
-        teachers=TeacherInfo.objects.all()
-        
-        try:
-            logged_in_as_student = StudentInfo.objects.get(name= request.user)
-        except:
-            logged_in_as_student = ""
-           
-            
-        try:
-            logged_in_as_teacher = TeacherInfo.objects.get(name= request.user)
-        except:
-            logged_in_as_teacher=""
+  
     context = {
         "single_teacher": single_teacher,
-          "logged_in_as_student":logged_in_as_student,
-        "logged_in_as_teacher": logged_in_as_teacher,
-        "students":students,
-        "teachers":teachers
+       
     }
     return render(request, "teachers/single_teacher.html", context)
 
@@ -73,7 +57,7 @@ def edit_teacher(request, pk):
         if edit_teacher_forms.is_valid():
             edit_teacher_forms.save()
             messages.success(request, "Edit Teacher Info Successfully!")
-            return redirect("teachers:teacher_list")
+            return redirect("lecturers:teacher_list")
 
     context = {
         "edit_teacher_forms": edit_teacher_forms

@@ -35,7 +35,8 @@ class TeacherInfo(models.Model):
     )
     module = models.ForeignKey("students.StudentModules", on_delete=models.SET_NULL , null=True , related_name="teacher_modules")
     Faculty = models.CharField( choices=faculty_choice, max_length=100 ,null=True,blank=True )
-
+    approved = models.BooleanField(default=False)
+    
     def __str__(self):
         return str(self.full_name)
 

@@ -37,6 +37,7 @@ class StudentInfo(models.Model):
     )
     gender = models.CharField(choices=gender_choice, max_length=10)
     modules = models.ManyToManyField(StudentModules,related_name="modules", blank=True)
+    approved = models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.full_name)

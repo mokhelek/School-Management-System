@@ -37,6 +37,7 @@ class StudentInfo(models.Model):
     )
     gender = models.CharField(choices=gender_choice, max_length=10)
     modules = models.ManyToManyField(StudentModules,related_name="modules", blank=True)
+    student_image = models.ImageField(blank=True  ,null=True)
     approved = models.BooleanField(default=False)
     
     def __str__(self):
@@ -55,6 +56,7 @@ class StudentSession(models.Model):
     session_time = models.TimeField( null=True , blank=True)
     session_venue = models.ForeignKey(Venues, on_delete=models.CASCADE ,default="No Instructor Yet")
     module = models.ForeignKey(StudentModules, on_delete=models.CASCADE ,null=True , blank =True)
+  
     
     date_added = models.DateTimeField(auto_now_add=True , null=True , blank=True)
     

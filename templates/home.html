@@ -6,7 +6,7 @@
 {% block content %}
 
 
- <div class="container-fluid" style="width:95%">  
+ <div class="container-fluid" >  
      <br>
      <!-- ################### Student Dashboard ####################################-->
     {% if logged_in_as_student in students %}
@@ -15,10 +15,19 @@
         <h3> Logged In As Student</h3>
         <hr>
         <div >
-           
-        <span class="d-flex">  full Name :  <h5> &nbsp; {{logged_in_as_student}} </h5> </span> 
-       <span class="d-flex">  Student No. :  <h5> &nbsp;{{logged_in_as_student.name}} </h5> </span>  
-         <span class="d-flex">  Student Email :   <h5> &nbsp;{{logged_in_as_student.student_email}} </h5> </span> 
+
+        <div class="d-flex">  
+            {% if logged_in_as_student.student_image != Null %}
+            <img style="border: 1px rgba(135, 135, 255, 0.423) solid;" height="100" src="{{logged_in_as_student.student_image.url}}" alt=""> &nbsp;&nbsp;&nbsp;
+            {% endif %}
+            <div>  
+                <span class="d-flex">  full Name :  <h5> &nbsp; {{logged_in_as_student}} </h5> </span> 
+                <span class="d-flex">  Student No. :  <h5> &nbsp;{{logged_in_as_student.name}} </h5> </span>  
+                <span class="d-flex">  Student Email :   <h5> &nbsp;{{logged_in_as_student.student_email}} </h5> </span> 
+            </div>
+
+        </div>
+
 
          <div class="d-flex">   
             <a href="{% url 'students:edit_student' logged_in_as_student.id %}"> Edit Details</a> &nbsp;|&nbsp;
@@ -26,25 +35,14 @@
         </div> 
         <hr>
 
-
-        <div class="sessions" style="height: 4cm;">
-            <h2><strong>Sessions</strong></h2>
-            {% for session in student_sessions %}
-                <h6>  <a style="text-decoration:underline;" href="{% url 'lecturers:single_session' session.id %}"> {{session.session_name}} </a>  </h5>  
-            {% empty %}  
-          
-            <h5 style="color: rgb(145, 145, 145);"> Lecturer Has Not made sessions yet</h5>
-            {% endfor %}
-        </div>
-
-
-
-        <div class="student-modules">
+        <div class="student-modules" style="background-color:#d4e7ffa6 ;border: 1.5px #afd1fc solid;">
+            <br>
+            <div class="container" style="width: 95%;">  
             <h2><strong>Modules</strong></h2>
             <div class="row">
                 {% for i in logged_in_as_student.modules.all %}
                 <div class="col-4">
-                    <div class="card card-body" style="height: 200px;">
+                    <div class="card card-body" style="background-color: #6f87ff38; height: 200px;border-left: {% cycle 'red' 'orange' '#008D2F' 'blue' '#E528F2' '#E6E116'  '#009FB8' '#E6E116' %} 4px solid;">
                         <h5>  <strong> {{i}}</strong> </h5> 
                         <h5>{{i.module_description|truncatechars:60}} </h5>
                         <div class="row">
@@ -71,8 +69,20 @@
                 <h5 style="color: rgb(145, 145, 145);"> &nbsp;&nbsp;Admin Has Not Assigned Modules Yet</h5>
                 {% endfor %}
             </div>
-          
         </div>
+        </div>
+
+        <div class="sessions" style="height: 4cm;">
+            <h2><strong>Sessions</strong></h2>
+            {% for session in student_sessions %}
+                <h6>  <a style="text-decoration:underline;" href="{% url 'lecturers:single_session' session.id %}"> {{session.session_name}} </a>  </h5>  
+            {% empty %}  
+          
+            <h5 style="color: rgb(145, 145, 145);"> Lecturer Has Not made sessions yet</h5>
+            {% endfor %}
+        </div>
+
+
         {% else %}
             <h3>Waiting for approval from admin</h3>
         {% endif %}
